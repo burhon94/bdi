@@ -3,7 +3,6 @@ package di
 import (
 	"errors"
 	"fmt"
-	"log"
 	"reflect"
 )
 
@@ -28,10 +27,6 @@ func (c *container) Provide(constructors ...interface{}) (err error) {
 	if err != nil {
 		return err
 	}
-
-	//TODO delete
-	log.Print(len(c.definitions))
-	log.Print(len(c.components))
 	return nil
 }
 
@@ -83,7 +78,6 @@ func (c *container) register(constructors []interface{}) (err error) {
 	for _, constructor := range constructors {
 		constructorType := reflect.TypeOf(constructor)
 
-		log.Print(constructorType.Kind())
 		if constructorType.Kind() != reflect.Func {
 			err = errors.New(fmt.Sprintf("%s must be constructor", constructorType.Name()))
 			return err
@@ -111,7 +105,6 @@ func (c *container) register(constructors []interface{}) (err error) {
 	return nil
 }
 
-//TODO SOME HAVEN't err
 func (c *container) wire() (err error) {
 	rest := make(map[reflect.Type]definition, len(c.definitions))
 
